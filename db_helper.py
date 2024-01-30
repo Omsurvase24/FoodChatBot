@@ -9,6 +9,21 @@ cnx = mysql.connector.connect(
 )
 
 
+def get_next_order_id():
+    cursor = cnx.cursor()
+
+    query = "SELECT MAX(order_id) FROM orders"
+    cursor.execute(query)
+
+    result = cursor.fetchone()[0]
+    cursor.close()
+
+    if result is None:
+        return 1
+    else:
+        return result + 1
+
+
 def get_order_status(order_id: int):
 
     cursor = cnx.cursor()
